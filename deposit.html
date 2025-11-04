@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isi Ulang Dana (Deposit) - Indoreal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Variabel CSS untuk warna UNGU (Indoreal Style) */
+        :root {
+            --primary-purple: #8A2BE2; /* Ungu Utama */
+            --light-purple: #210e3f;  /* Ungu Lebih Terang */
+            --bg-light: #fff;
+            --text-dark: #333;
+            --text-muted: #666;
+            --text-light: #ffffff;
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Definisi Keyframes untuk animasi kilauan otomatis */
+        @keyframes shine {
+            0% { left: -130%; }
+            100% { left: 130%; }
+        }
+
+        /* Styling Dasar (Tidak Berubah) */
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-light); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; color: var(--text-dark); }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); flex-grow: 1; display: flex; flex-direction: column; position: relative; }
+        .main-content { padding: 20px 20px 40px 20px; flex-grow: 1; }
+
+        /* HEADER (Tidak Berubah) */
+        .recharge-header { background: linear-gradient(to right, var(--primary-purple), var(--light-purple)); color: var(--text-light); padding: 15px 20px; display: flex; align-items: center; }
+        .recharge-header h2 { font-size: 18px; font-weight: 600; margin: 0; flex-grow: 1; text-align: center; }
+        .back-button { background: none; border: none; color: white; font-size: 20px; cursor: pointer; position: absolute; left: 15px; }
+
+        /* ======================================= */
+        /* === KARTU SALDO SAAT INI - DITAMBAH EFEK KILAU === */
+        /* ======================================= */
+        .balance-summary-card {
+            background-color: var(--light-purple);
+            color: var(--text-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-subtle);
+            /* Properti untuk kilauan */
+            position: relative; 
+            overflow: hidden; 
+            z-index: 1;
+        }
+        
+        /* Pseudo-element Kilauan untuk Kotak Saldo */
+        .balance-summary-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -130%; 
+            width: 30%; 
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3); /* Kilauan sedikit lebih terang di kartu ungu */
+            transform: skewX(-20deg); 
+            z-index: 2; 
+            animation: shine 4s linear infinite 0.5s; /* Durasi 4s, jeda 0.5s */
+        }
+        
+        .balance-summary-card h3 { font-size: 16px; margin: 0 0 5px 0; font-weight: 500; }
+        .balance-summary-card p { font-size: 28px; margin: 0; font-weight: 700; }
+        
+        /* FORMULIR DAN TOMBOL (Tidak Berubah) */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: #222; margin-bottom: 8px; }
+        .input-amount-container { display: flex; align-items: center; border: 2px solid #ddd; border-radius: 10px; background-color: #fff; padding: 5px 15px; transition: border-color 0.3s; }
+        .input-amount-container:focus-within { border-color: var(--primary-purple); }
+        .input-amount-container span { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-right: 10px; }
+        .input-amount { flex-grow: 1; border: none; padding: 10px 0; font-size: 18px; font-weight: 600; color: var(--text-dark); outline: none; -moz-appearance: textfield; }
+        .input-amount::-webkit-inner-spin-button, .input-amount::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .select-method { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; background-color: #fff; font-size: 16px; color: var(--text-dark); appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='%238A2BE2' d='M9.293 12.95l.707.707 5-5-1.414-1.414L10 10.836 6.414 7.25 5 8.664l4.293 4.286z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 10px top 50%; background-size: 12px; cursor: pointer; }
+        .btn-recharge-submit { width: 100%; padding: 15px; background: linear-gradient(to right, var(--primary-purple), var(--light-purple)); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4); margin-top: 15px; transition: opacity 0.2s; }
+        .btn-recharge-submit:hover { opacity: 0.9; }
+        .recharge-note { font-size: 12px; color: #dc3545; margin-top: 15px; padding: 10px; background-color: #ffe0e0; border: 1px dashed #dc3545; border-radius: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="recharge-header">
+            <button class="back-button" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2>Deposito</h2>
+        </header>
+
+        <div class="main-content">
+
+            <div class="balance-summary-card">
+                <h3>Saldo Akun Saat Ini</h3>
+                <p>Rp 0</p>
+            </div>
+            
+            <form id="rechargeForm">
+                <div class="form-group">
+                    <label for="amount">Masukkan Jumlah Deposit (Min. Rp50.000)</label>
+                    <div class="input-amount-container">
+                        <span>Rp</span>
+                        <input type="number" id="amount" class="input-amount" placeholder="Contoh: 50000" required min="50000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="method">Pilih Metode Pembayaran</label>
+                    <select id="method" class="select-method" required>
+                        <option value="">-- Pilih Metode --</option>
+                        <option value="bank_transfer">Qris</option>
+                        <option value="ewallet">Virtual Account</option>
+                        <option value="retail">E-wallet</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-recharge-submit">
+                    Lanjutkan Pembayaran
+                </button>
+            </form>
+
+            <div class="recharge-note">
+                <i class="fas fa-exclamation-triangle"></i> Pastikan jumlah yang di-input sesuai untuk menghindari kegagalan sistem.
+            </div>
+            
+        </div>
+    </div>
+    
+<script>
+document.getElementById('rechargeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const amountInput = document.getElementById('amount');
+    const methodSelect = document.getElementById('method');
+    const amount = Number(amountInput.value);
+    const method = methodSelect.value;
+    
+    if (amount < 50000) {
+        alert('Minimal isi ulang adalah Rp 50.000.');
+        amountInput.focus();
+        return;
+    }
+    if (method === "") {
+        alert('Mohon pilih metode pembayaran.');
+        methodSelect.focus();
+        return;
+    }
+
+    // Simpan data deposit ke localStorage
+    localStorage.setItem('currentDepositAmount', amount);
+    localStorage.setItem('currentDepositMethod', method);
+
+    // Redirect ke halaman payment
+    window.location.href = "payment.html";
+});
+</script>
+</body>
+</html>

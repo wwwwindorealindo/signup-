@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atur Akun Bank - Indoreal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Variabel CSS untuk warna UNGU (Indoreal Style) */
+        :root {
+            --primary-purple: #8A2BE2; /* Ungu Utama */
+            --light-purple: #210e3f;  /* Ungu Lebih Terang */
+            --bg-light: #fff;
+            --text-dark: #333;
+            --text-muted: #666;
+            --text-light: #ffffff;
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Styling Dasar */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-light); 
+            margin: 0; 
+            padding: 0; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            color: var(--text-dark); 
+        }
+        .app-container { 
+            width: 100%; 
+            max-width: 450px; 
+            margin: 0 auto; 
+            background-color: #fff; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+        }
+        .main-content { 
+            padding: 20px 20px 40px 20px;
+            flex-grow: 1; 
+        }
+
+        /* ======================================= */
+        /* === HEADER ATUR BANK === */
+        /* ======================================= */
+        .bank-header {
+            background: linear-gradient(to right, var(--primary-purple), var(--light-purple));
+            color: var(--text-light);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+        .bank-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            position: absolute;
+            left: 15px;
+        }
+
+        /* ======================================= */
+        /* === FORMULIR BANK === */
+        /* ======================================= */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+          width: 100%;
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 8px;
+        }
+        
+        /* Input Text */
+        .input-text, .select-bank {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-dark);
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .input-text:focus, .select-bank:focus {
+             border-color: var(--primary-purple);
+             padding: 15px 20px;
+             box-shadow: 0 0 5px rgba(138, 43, 226, 0.3);
+        }
+        
+        /* Dropdown Bank */
+        .select-bank {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='%238A2BE2' d='M9.293 12.95l.707.707 5-5-1.414-1.414L10 10.836 6.414 7.25 5 8.664l4.293 4.286z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px;
+            cursor: pointer;
+        }
+
+        /* Catatan Penting */
+        .important-note {
+            font-size: 13px;
+            color: #dc3545;
+            padding: 15px;
+            background-color: #ffe0e0;
+            border-left: 5px solid #dc3545;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .important-note i {
+            margin-right: 5px;
+        }
+
+        /* Tombol Simpan */
+        .btn-save-bank {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, var(--primary-purple), var(--light-purple));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+            margin-top: 15px;
+            transition: opacity 0.2s;
+        }
+        .btn-save-bank:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="bank-header">
+            <button class="back-button" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h2> Akun Bank Saya</h2>
+        </header>
+
+        <div class="main-content">
+
+            <div class="important-note">
+                <i class="fas fa-exclamation-circle"></i>
+                Pastikan Nama dan Nomor Rekening Bank yang Anda masukkan **benar dan sesuai dengan data KTP** Anda. Kesalahan dapat menyebabkan kegagalan penarikan dana.
+            </div>
+            
+            <form id="bankAccountForm">
+                
+                <div class="form-group">
+                    <label for="bankName">Pilih Nama Bank</label>
+                    <select id="bankName" class="select-bank" required>
+                        <option value="">-- Pilih Bank --</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BRI">BRI</option>
+                       <option value="BNI">BNI</option>
+                        <option value="BSI"> BSI</option>
+                        <option value="CIMB">CIMB Niaga</option>
+                        <option value="Mandiri">Mandiri</option>
+                        <option value="Permata"> Permata</option>
+                       <option option value="Danamon">Danamon</option>
+                       <option value="Seabank">Seabank</option>
+                       <option value="DANA">DANA</option>
+                       <option value="GoPay">GoPay</option>
+                       <option value="OVO">OVO</option>
+                       <option value="ShopeePay">ShopeePay</option>
+                       <option value="LinkAja">LinkAja</option>
+                       <option value="i.saku">I.saku</option>
+                       <option value="AstraPay">AstraPay</option>
+                       <option value="KasPro">KasPro</option>
+                        </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="accountHolder">Nama Pemilik Rekening</label>
+                    <input type="text" id="accountHolder" class="input-text" placeholder="Masukkan Nama Lengkap Sesuai Rekening" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="accountNumber">Nomor Rekening Bank</label>
+                    <input type="number" id="accountNumber" class="input-text" placeholder="Masukkan Nomor Rekening" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Konfirmasi Kata Sandi Login</label>
+                    <input type="password" id="loginPassword" class="input-text" placeholder="Masukkan Kata Sandi Anda" required>
+                </div>
+
+                <button type="submit" class="btn-save-bank">
+                    <i class="fas fa-save"></i> Simpan Rekening Bank
+                </button>
+            </form>
+            
+        </div>
+    </div>
+    <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    // Ambil elemen form
+    const bankAccountForm = document.getElementById('bankAccountForm');
+
+    // Ambil data active user (misal user yang sedang login)
+    let activeUser = JSON.parse(localStorage.getItem('activeUser')) || {};
+
+    // Jika user sudah punya data bank, tampilkan di form
+    if (activeUser.bank) {
+        document.getElementById('bankName').value = activeUser.bank.bankName || '';
+        document.getElementById('accountHolder').value = activeUser.bank.accountHolder || '';
+        document.getElementById('accountNumber').value = activeUser.bank.accountNumber || '';
+    }
+
+    // Event submit form
+    bankAccountForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const bankName = document.getElementById('bankName').value;
+        const accountHolder = document.getElementById('accountHolder').value.trim();
+        const accountNumber = document.getElementById('accountNumber').value.trim();
+        const loginPassword = document.getElementById('loginPassword').value;
+
+        // Validasi sederhana
+        if (!bankName || !accountHolder || accountNumber.length < 8 || loginPassword.length < 6) {
+            alert('Mohon lengkapi semua field dengan benar.');
+            return;
+        }
+
+        // Simpan data bank di activeUser
+        activeUser.bank = {
+            bankName,
+            accountHolder,
+            accountNumber
+        };
+
+        // Update localStorage
+        localStorage.setItem('activeUser', JSON.stringify(activeUser));
+
+        alert(`Rekening Bank ${bankName} (${accountNumber}) atas nama ${accountHolder.toUpperCase()} berhasil disimpan!`);
+
+        // Kembali ke halaman Tarik Dana
+        window.location.href = "tarik.html";
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran Deposit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Variabel CSS untuk warna */
+        :root {
+            --primary-purple: #8A2BE2; /* Ungu Utama */
+            --light-purple: #210e3f;  /* Ungu lebih gelap/Background Gelap */
+            --bg-light: #ffff;
+            --text-dark: #333;
+            --text-light: #fff;
+            --highlight-orange: #ff9800; 
+            --warning-bg: #fff8e1;
+            --blue-gradient-start: #8A2BE2; 
+            --blue-gradient-end: #6A5ACD; 
+        }
+
+        /* DEFINISI KEYFRAMES */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* === GLOBAL LOADING OVERLAY KHUSUS === */
+        #globalLoadingOverlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--bg-light); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+
+        #globalLoadingOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-purple);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: spin 1.5s linear infinite; 
+        }
+        .loading-logo-container i {
+            font-size: 40px;
+            color: white;
+        }
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-purple);
+        }
+
+        /* === STYLING KONTEN UTAMA === */
+        body { 
+            font-family: 'Poppins', sans-serif; background-color: var(--bg-light); 
+            margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; 
+            color: var(--text-dark); 
+        }
+        .app-container { 
+            width: 100%; max-width: 450px; margin: 0 auto; background-color: #fff; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); flex-grow: 1; display: flex; 
+            flex-direction: column; 
+        }
+
+        /* Header Minimalis */
+        .header-minimal {
+            background: linear-gradient(to right, var(--blue-gradient-start), var(--blue-gradient-end));
+            color: var(--text-light);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-minimal a { color: var(--text-light); font-size: 20px; }
+        .header-minimal h2 { font-size: 18px; font-weight: 600; margin: 0; flex-grow: 1; text-align: center; }
+
+        /* Main Content */
+        .main-content { padding: 20px; flex-grow: 1; }
+
+        /* Timer Box (Top Banner) */
+        .timer-box {
+            background-color: var(--warning-bg);
+            color: var(--text-dark);
+            border-left: 5px solid var(--highlight-orange);
+            padding: 10px 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .timer-box i { color: var(--highlight-orange); margin-right: 10px; font-size: 18px; }
+        .timer-box .timer-time { 
+            font-weight: 700; 
+            color: var(--primary-purple); 
+            font-size: 16px; 
+            margin-left: 5px;
+        }
+
+        /* Detail Pembayaran */
+        .payment-detail { text-align: center; margin-bottom: 30px; }
+        .payment-detail .amount-label { font-size: 16px; color: var(--text-dark); margin-bottom: 5px; }
+        .payment-detail .amount { font-size: 32px; font-weight: 700; color: var(--primary-purple); margin-bottom: 20px; }
+
+        /* QR Code Area */
+        .qr-area { text-align: center; margin-bottom: 30px; }
+        .qr-code { 
+            width: 200px; 
+            height: 200px; 
+
+            margin: 0 auto 15px auto; 
+            display: block; 
+            
+        }
+        .qr-code img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+        }
+        .qr-area button {
+            background-color: var(--light-purple);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 25px; 
+        }
+        .qr-area button:hover { background-color: #3f1a6c; }
+
+        .payment-instruction { font-size: 12px; color: #666; margin-bottom: 20px; text-align: center; }
+
+        /* Logo Pembayaran (Satu Gambar) */
+        .payment-logos-single {
+            text-align: center;
+            padding-top: 15px;
+        }
+        .payment-logos-single img { 
+            max-width: 90%; 
+            height: auto; 
+            max-height: 150px; 
+            object-fit: contain; 
+            border-radius: 8px;
+            
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="globalLoadingOverlay">
+        <div class="loading-logo-container">
+            <i class="fas fa-money-check-alt"></i>
+        </div>
+        <p class="loading-text">Memproses Pembayaran...</p>
+    </div>
+
+    <div class="app-container" id="appContainer">
+        
+
+        
+        <div class="main-content">
+            
+            <div class="timer-box">
+                <i class="fas fa-stopwatch"></i>
+                Layanan batas waktu pembayaran Anda 10 menit. 
+                <span class="timer-time" id="countdownTimer">00:59:59</span>
+            </div>
+
+            <div class="payment-detail">
+                <p class="amount-label">Jumlah Pembayaran </p>
+                <p class="amount" id="paymentAmount">Rp 1.000.000</p>
+            </div>
+            
+            <div class="qr-area">
+                <div class="qr-code">
+                    <img src="123kodeqr.jpg" alt="QR Code Pembayaran">
+                </div>
+                
+                <button id="saveQrBtn">
+                    <i class="fas fa-download"></i> Simpan kode QR
+                </button>
+                
+                <p class="payment-instruction">
+                   Pastikan Anda membayar nominal deposit sesuai dengan 3 kode unik dibelakang agar deposit Anda ter-proses dan berhasil dengan cepat ke akun Anda.
+                </p>
+
+                <div class="payment-logos-single">
+                    <img src="bank.png" alt="Logo Pembayaran Bank dan E-Wallet">
+                </div>
+
+            </div>
+            
+        </div>
+    </div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // === LOGIC LOADING OVERLAY ===
+    const loadingOverlay = document.getElementById('globalLoadingOverlay');
+    setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+    }, 1000); 
+
+    // === LOGIC COUNTDOWN TIMER ===
+    const timerDisplay = document.getElementById('countdownTimer');
+    let duration = 10 * 60; // 10 menit
+
+    function formatTime(seconds) {
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function startTimer() {
+        const timerInterval = setInterval(() => {
+            if (duration <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "Waktu Habis";
+                alert("Waktu pembayaran telah habis.");
+                return;
+            }
+            duration--;
+            timerDisplay.textContent = formatTime(duration);
+        }, 1000);
+    }
+
+    timerDisplay.textContent = formatTime(duration);
+    setTimeout(startTimer, 1000); 
+
+    // === LOGIC JUMLAH DEPOSIT DENGAN 3 DIGIT UNIK ===
+    const depositAmount = Number(localStorage.getItem('currentDepositAmount') || 1000000);
+    const uniqueCode = Math.floor(100 + Math.random() * 900); // 100-999
+    const finalAmount = depositAmount + uniqueCode;
+
+    document.getElementById('paymentAmount').textContent = 
+        "Rp " + finalAmount.toLocaleString("id-ID");
+
+    // === LOGIC TOMBOL SIMPAN QR ===
+    const saveQrBtn = document.getElementById('saveQrBtn');
+    saveQrBtn.addEventListener('click', function() {
+        const qrImg = document.querySelector('.qr-code img');
+        if (!qrImg) return;
+
+        // Buat elemen <a> sementara untuk download
+        const link = document.createElement('a');
+        link.href = qrImg.src;
+        link.download = 'qr-deposit.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    // === LOGIC TOMBOL KEMBALI ===
+    const backLink = document.querySelector('.back-link');
+    if (backLink) {
+        backLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = "deposit.html"; 
+        });
+    }
+});
+</script>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investasi Saya - Indoreal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Variabel CSS untuk warna UNGU (Indoreal Style) */
+        :root {
+            --primary-purple: #8A2BE2; /* Ungu Utama */
+            --light-purple: #210e3f;  /* Ungu Lebih Terang */
+            --bg-light: #fff;
+            --text-dark: #333;
+            --text-muted: #666;
+            --text-light: #ffffff;
+            --shadow-soft: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling Dasar (Tidak Berubah) */
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-light); margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; color: var(--text-dark); }
+        .app-container { width: 100%; max-width: 450px; margin: 0 auto; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); flex-grow: 1; display: flex; flex-direction: column; position: relative; }
+        .main-content { padding: 0 20px 80px 20px; flex-grow: 1; }
+
+        /* HEADER & RINGKASAN ATAS (Tidak Berubah) */
+        .top-section { background: linear-gradient(to right, var(--primary-purple), var(--light-purple)); color: var(--text-light); padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .top-section h2 { font-size: 24px; font-weight: 700; margin: 0 0 5px 0; text-align: center; }
+        .top-section p { font-size: 14px; opacity: 0.8; margin: 0; text-align: center; }
+
+        /* ======================================= */
+        /* === STATUS KOSONG INVESTASI (KOREKSI IKON) === */
+        /* ======================================= */
+        .empty-investment-card {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: var(--shadow-soft);
+            border: 1px dashed var(--light-purple);
+        }
+        
+        .empty-icon-sad i { /* Menggunakan tag <i> untuk Font Awesome */
+            font-size: 80px; 
+            color: #cccc;
+            margin-bottom: 20px;
+        }
+        
+        .empty-investment-card h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 0 0 10px 0;
+        }
+        .empty-investment-card p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin: 0 0 25px 0;
+        }
+        
+        /* Tombol Beli Produk (Tidak Berubah) */
+        .btn-buy-product {
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--primary-purple), var(--light-purple));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(138, 43, 226, 0.3);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: opacity 0.2s;
+        }
+        .btn-buy-product i {
+            margin-right: 8px;
+        }
+        .btn-buy-product:hover {
+            opacity: 0.9;
+        }
+
+
+        /* NAVIGASI BAWAH (Tidak Berubah) */
+        .bottom-nav { 
+            display: flex; justify-content: space-around; align-items: center; height: 60px; 
+            background-color: #fff; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+            position: fixed; bottom: 0; width: 100%; max-width: 450px; margin: 0 auto; 
+            border-top: 1px solid #eee; z-index: 10; 
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; text-decoration: none; 
+            color: var(--text-muted); font-size: 10px; font-weight: 500; padding: 5px; transition: color 0.3s; 
+        }
+        .nav-item i { font-size: 20px; margin-bottom: 3px; }
+        .nav-item.active-product { color: var(--primary-purple); font-weight: 0; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="top-section">
+            <h2>Investasi Saya</h2>
+            <p>Kelola semua produk investasi Anda</p>
+        </header>
+
+        <div class="main-content">
+
+            <div class="empty-investment-card">
+                <div class="empty-icon-sad">
+                    <i class="fas fa-sad-tear"></i> 
+                </div>
+                <h4>Belum Ada Investasi Aktif</h4>
+                <p>Silakan beli produk investasi untuk mulai mendapatkan keuntungan.</p>
+                
+                <a href="deposit.html" class="btn-buy-product">
+                    <i class="fas fa-hand-holding-dollar"></i> Deposit & Beli Produk
+                </a>
+            </div>
+
+            <h3 style="margin-top: 30px; font-weight: 700; color: var(--text-dark);">Riwayat Transaksi</h3>
+            <p style="color: var(--text-muted); font-size: 14px; text-align: center;">Riwayat investasi yang telah selesai akan muncul di sini.</p>
+            
+        </div>
+        
+        <nav class="bottom-nav">
+            <a href="beranda.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                Beranda
+            </a>
+            <a href="investasiku.html" class="nav-item active-product">
+                <i class="fas fa-chart-line"></i>
+                Invest
+            </a>
+            <a href="tim.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                Tim
+            </a>
+            <a href="profil.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                Profil
+            </a>
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catatan Transaksi - Indoreal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+:root {
+    --primary-purple: #8A2BE2;
+    --light-purple: #210e3f;
+    --bg-light: #fff;
+    --text-dark: #333;
+    --text-muted: #666;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --success-green: #28a745;
+    --danger-red: #dc3545;
+    --pending-blue: #007bff;
+}
+
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background-color: var(--bg-light); 
+    margin: 0; 
+    padding: 0; 
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
+    color: var(--text-dark); 
+}
+.app-container { 
+    width: 100%; 
+    max-width: 450px; 
+    margin: 0 auto; 
+    background-color: #fff; 
+    box-shadow: var(--shadow-light); 
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+}
+
+.header { 
+    background: linear-gradient(to right, var(--primary-purple), var(--light-purple)); 
+    color: white; 
+    padding: 15px 20px; 
+    display: flex; 
+    align-items: center;
+    position: relative;
+}
+.header .back-button {
+    background: none; 
+    border: none; 
+    color: white; 
+    font-size: 20px; 
+    cursor: pointer; 
+    position: absolute; 
+    left: 15px; 
+}
+.header .page-title {
+    font-size: 18px; 
+    font-weight: 600; 
+    margin: 0; 
+    flex-grow: 1; 
+    text-align: center; 
+}
+
+.main-content { 
+    flex-grow: 1; 
+    padding-bottom: 60px; 
+}
+
+.tab-nav {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 2px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.tab-button {
+    flex-grow: 1;
+    padding: 15px 10px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+.tab-button.active {
+    color: var(--primary-purple);
+    border-bottom: 3px solid var(--primary-purple);
+}
+
+.tab-content {
+    padding: 15px 20px;
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-light);
+    margin-bottom: 10px;
+    border-left: 5px solid var(--primary-purple);
+}
+
+.transaction-details {
+    flex-grow: 1;
+}
+.transaction-amount {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.deposit .transaction-amount { color: var(--success-green); }
+.withdrawal .transaction-amount { color: var(--danger-red); }
+.transaction-date { font-size: 12px; color: var(--text-muted); }
+
+.transaction-status {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    min-width: 80px;
+}
+.status-success { background-color: var(--success-green); color: white; }
+.status-pending { background-color: var(--pending-blue); color: white; }
+.status-failed { background-color: var(--danger-red); color: white; }
+
+.bottom-nav { 
+    display: flex; justify-content: space-around; align-items: center; 
+    height: 60px; background-color: #fff; 
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+    position: fixed; bottom: 0; width: 100%; 
+    max-width: 450px; margin: 0 auto; 
+    border-top: 1px solid #eee; z-index: 100; 
+}
+.nav-item { 
+    display: flex; flex-direction: column; align-items: center; 
+    text-decoration: none; color: var(--text-muted); 
+    font-size: 10px; font-weight: 500; padding: 5px; 
+    transition: color 0.3s; 
+}
+.nav-item i { font-size: 20px; margin-bottom: 3px; }
+.nav-item.active { color: var(--primary-purple); }
+</style>
+</head>
+<body>
+<div class="app-container">
+    <header class="header">
+        <a href="#" class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="page-title">Riwayat Transaksi</h1>
+    </header>
+
+    <div class="main-content">
+        <div class="tab-nav">
+            <div class="tab-button active" data-tab="deposit">Catatan Deposit</div>
+            <div class="tab-button" data-tab="withdrawal">Catatan Penarikan</div>
+        </div>
+
+        <div id="deposit" class="tab-content active"></div>
+        <div id="withdrawal" class="tab-content"></div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+    if (!activeUser) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    function renderTransactions() {
+        const depositContainer = document.getElementById('deposit');
+        const withdrawalContainer = document.getElementById('withdrawal');
+        depositContainer.innerHTML = '';
+        withdrawalContainer.innerHTML = '';
+
+        const deposits = activeUser.deposits || [];
+        const withdrawals = activeUser.withdrawals || [];
+
+        // Render Deposit
+        if (deposits.length === 0) {
+            depositContainer.innerHTML = `<p style="text-align:center; color:#666; margin-top:20px;">Belum ada transaksi deposit</p>`;
+        } else {
+            deposits.forEach(tx => {
+                const div = document.createElement('div');
+                div.className = 'transaction-item deposit';
+                div.innerHTML = `
+                    <div class="transaction-details">
+                        <div class="transaction-amount">+ Rp ${Number(tx.amount).toLocaleString('id-ID')}</div>
+                        <div class="transaction-date">${tx.date}</div>
+                    </div>
+                    <div class="transaction-status ${tx.status === 'Berhasil' ? 'status-success' : tx.status === 'Menunggu' ? 'status-pending' : 'status-failed'}">${tx.status}</div>
+                `;
+                depositContainer.appendChild(div);
+            });
+        }
+
+        // Render Withdrawal
+        if (withdrawals.length === 0) {
+            withdrawalContainer.innerHTML = `<p style="text-align:center; color:#666; margin-top:20px;">Belum ada transaksi penarikan</p>`;
+        } else {
+            withdrawals.forEach(tx => {
+                const div = document.createElement('div');
+                div.className = 'transaction-item withdrawal';
+                div.innerHTML = `
+                    <div class="transaction-details">
+                        <div class="transaction-amount">- Rp ${Number(tx.amount).toLocaleString('id-ID')}</div>
+                        <div class="transaction-date">${tx.date}</div>
+                    </div>
+                    <div class="transaction-status ${tx.status === 'Berhasil' ? 'status-success' : tx.status === 'Menunggu' ? 'status-pending' : 'status-failed'}">${tx.status}</div>
+                `;
+                withdrawalContainer.appendChild(div);
+            });
+        }
+    }
+
+    // Panggil renderTransactions() saat page load
+    renderTransactions();
+
+    // Tab switch
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            button.classList.add('active');
+            document.getElementById(button.dataset.tab).classList.add('active');
+        });
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klaim Bonus - Indoreal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+    :root {
+        --primary-purple: #8A2BE2;
+        --light-purple: #210e3f;
+        --bg-dark-card: #2c0e52;
+        --bg-light: #fff;
+        --text-dark: #333;
+        --text-light: #fff;
+        --text-muted: #ccc;
+    }
+
+    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#fff; display:flex; justify-content:center; min-height:100vh; }
+    .app-container { width:100%; max-width:450px; margin:0 auto; background:#fff; flex-grow:1; display:flex; flex-direction:column; }
+
+    .bonus-header { background:linear-gradient(135deg, var(--primary-purple), var(--light-purple)); color: var(--text-light); border-bottom-left-radius:25px; border-bottom-right-radius:25px; padding:15px 20px 80px 20px; display:flex; align-items:center; position:relative; }
+    .bonus-header h2 { font-size:18px; font-weight:600; margin:0; flex-grow:1; text-align:center; }
+    .back-button { background:none; border:none; color:white; font-size:20px; cursor:pointer; position:absolute; left:15px; }
+
+    .main-content { padding:0 20px; flex-grow:1; z-index:2; margin-top:-60px; }
+    .claim-card { background-color: var(--bg-dark-card); color: var(--text-light); padding:30px 20px; border-radius:15px; text-align:center; }
+    .claim-card i.fa-trophy { font-size:65px; color:gold; margin-bottom:10px; }
+    .claim-card h3 { font-size:24px; font-weight:800; margin:0 0 5px 0; }
+    .claim-card p { font-size:14px; color:#ccc; margin-bottom:30px; }
+
+    .input-group { margin-bottom:25px; display:flex; justify-content:center; }
+    .input-code { width:250px; max-width:100%; padding:15px 10px; border:none; border-radius:10px; background-color:rgba(255,255,255,0.1); color:var(--text-light); font-size:18px; text-align:center; letter-spacing:2px; font-weight:600; text-transform:uppercase; outline:none; }
+
+    .btn-claim-bonus { width:100%; padding:15px; background:#FFD700; color: var(--bg-dark-card); border:none; border-radius:12px; font-size:18px; font-weight:800; cursor:pointer; margin-top:10px; }
+    .btn-claim-bonus:disabled { background:#777; cursor:not-allowed; }
+
+    .info-area { margin-top:30px; text-align:center; padding:15px; }
+    .info-area a { color: var(--primary-purple); text-decoration:underline; font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="bonus-header">
+        <button class="back-button" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h2>Klaim Bonus</h2>
+    </header>
+
+    <div class="main-content">
+        <div class="claim-card">
+            <i class="fas fa-trophy"></i>
+            <h3>Selamat Datang!</h3>
+            <p>Masukkan kode rahasia Anda di bawah ini untuk mengklaim hadiah eksklusif dari Indoreal.</p>
+
+            <form id="bonusForm">
+                <div class="input-group">
+                    <input type="text" id="bonusCode" class="input-code" placeholder="KODE BONUS" required maxlength="20">
+                </div>
+                <button type="submit" class="btn-claim-bonus">AKTIFKAN BONUS SEKARANG</button>
+            </form>
+        </div>
+
+        <div class="info-area">
+            <p>Kode bonus dapat berupa saldo, poin, atau penawaran eksklusif.</p>
+            <a href="https://t.me/Indorealcs_12345">Butuh Bantuan? Hubungi Layanan Pelanggan <i class="fas fa-headset"></i></a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const BONUS_LIST = {
+      "INDOREAL_NEW": 50000,
+        "INDOREAL_ASHT": 100000,
+        "INDOREAL_YTWQ": 200000,
+        "INDOREAL_FXRU": 300000,
+        "INDOREAL_XSVC": 400000,
+        "INDOREAL_EWQS": 500000,
+        "INDOREAL_HIJQ": 600000,
+        "INDOREAL_CVMN": 700000,
+        "INDOREAL_XNBV": 800000,
+        "INDOREAL_SOLA": 900000,
+        "INDOREAL_WEQW": 1000000
+    };
+
+    const form = document.getElementById("bonusForm");
+    const input = document.getElementById("bonusCode");
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    let activeUser = JSON.parse(localStorage.getItem("activeUser"));
+
+    if(!activeUser){
+        window.location.href = "login.html";
+        return;
+    }
+
+    let index = users.findIndex(u => u.phone === activeUser.phone);
+    if(index === -1){
+        window.location.href = "login.html";
+        return;
+    }
+
+    users[index].balance = users[index].balance ?? 0;
+    users[index].claimedCodes = users[index].claimedCodes ?? [];
+
+    // Ambil saldo global untuk beranda
+    let saldoAkun = Number(localStorage.getItem("saldoAkun")) || 0;
+
+    form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        const code = input.value.trim().toUpperCase();
+
+        if(!BONUS_LIST[code]){
+            alert("Kode salah atau tidak valid!");
+            return;
+        }
+
+        if(users[index].claimedCodes.includes(code)){
+            alert("Kode sudah diklaim sebelumnya!");
+            return;
+        }
+
+        const amount = BONUS_LIST[code];
+        // Tambahkan ke balance user
+        users[index].balance += amount;
+        // Tandai kode sudah diklaim
+        users[index].claimedCodes.push(code);
+        activeUser = users[index];
+
+        // Tambahkan juga ke saldo global beranda
+        saldoAkun += amount;
+
+        // Simpan ke localStorage
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("activeUser", JSON.stringify(activeUser));
+        localStorage.setItem("saldoAkun", saldoAkun);
+
+        alert(`Bonus berhasil diklaim +Rp${amount.toLocaleString()}`);
+        window.location.href = "profil.html"; // Kembali ke profil
+    });
+});
+</script>
+
+</body>
+</html>

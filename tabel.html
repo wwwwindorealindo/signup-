@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produk Investasi - Indoreal</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    body { font-family: 'Poppins', sans-serif; background: #fff; margin: 0; padding: 0; }
+    
+        .profit-header {
+        background: linear-gradient(to right, #8A2BE2, #210e3f);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+    }
+    .profit-header h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        flex-grow: 1;
+        text-align: center;
+    }
+    .back-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        position: absolute;
+        left: 15px;
+    }
+    main { padding: 15px; }
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 400px; }
+    th, td { border: 1px solid #ddd; padding: 6px; text-align: center; }
+    th { background-color: #8A2BE2; color: #fff; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    tr:hover { background-color: #f1f1f1; }
+</style>
+</head>
+<body>
+
+    <header class="profit-header">
+        <button class="back-button" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h2>Daftar Paket Investasi</h2>
+    </header>
+
+<main>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Harga</th>
+                    <th>Pendapatan Harian</th>
+                    <th>Kontrak</th>
+                    <th>Total Pendapatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Rp100.000</td><td>Rp35.000</td><td>100 Hari</td><td>Rp3.500.000</td></tr>
+                <tr><td>2</td><td>Rp200.000</td><td>Rp70.000</td><td>100 Hari</td><td>Rp7.000.000</td></tr>
+                <tr><td>3</td><td>Rp300.000</td><td>Rp105.000</td><td>100 Hari</td><td>Rp10.500.000</td></tr>
+                <tr><td>4</td><td>Rp400.000</td><td>Rp140.000</td><td>100 Hari</td><td>Rp14.000.000</td></tr>
+                <tr><td>5</td><td>Rp500.000</td><td>Rp175.000</td><td>100 Hari</td><td>Rp17.500.000</td></tr>
+                <tr><td>6</td><td>Rp600.000</td><td>Rp210.000</td><td>100 Hari</td><td>Rp21.000.000</td></tr>
+                <tr><td>7</td><td>Rp700.000</td><td>Rp245.000</td><td>100 Hari</td><td>Rp24.500.000</td></tr>
+                <tr><td>8</td><td>Rp800.000</td><td>Rp280.000</td><td>100 Hari</td><td>Rp28.000.000</td></tr>
+                <tr><td>9</td><td>Rp900.000</td><td>Rp315.000</td><td>100 Hari</td><td>Rp31.500.000</td></tr>
+                <tr><td>10</td><td>Rp1.000.000</td><td>Rp350.000</td><td>100 Hari</td><td>Rp35.000.000</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Detail tambahan -->
+    <div class="investment-detail" style="margin-top:10px; font-size:13px; color:#555; line-height:1.5;">
+        <p>Catatan: Semua investasi memiliki kontrak 100 hari. Pendapatan harian akan masuk otomatis ke saldo penarikan setiap 24 jam. Pastikan untuk memantau saldo secara rutin agar bisa melihat akumulasi keuntungan harian.</p>
+        <p>Harga dan total pendapatan bersifat estimasi berdasarkan paket yang dipilih. Nilai aktual bisa sedikit berbeda tergantung waktu mulai investasi dan hitungan sistem otomatis.</p>
+        <p>Setiap paket investasi memiliki risiko tertentu. Kami menyarankan agar memilih paket sesuai kemampuan modal dan rencana keuangan. Jangan lupa pertimbangkan strategi jangka panjang agar keuntungan maksimal.</p>
+        <p>Pendapatan harian akan dihitung secara otomatis berdasarkan waktu terakhir profit masuk (lastProfitDate). Sistem akan menambahkan profit ke saldo penarikan setelah 24 jam penuh berjalan.</p>
+        <p>Pengguna dapat memilih paket mulai dari Rp100.000 hingga Rp1.000.000, dengan estimasi total profit sesuai tabel di atas. Semakin tinggi paket, semakin besar pendapatan harian dan total estimasi keuntungan.</p>
+        <p>Pastikan untuk selalu membaca detail kontrak dan aturan investasi. Seluruh transaksi tercatat otomatis dalam sistem sehingga aman dan transparan.</p>
+        <p>Investasi ini bersifat jangka menengah 100 hari, namun profit harian dapat dicairkan sesuai ketentuan setiap 24 jam. Selalu periksa saldo penarikan untuk memantau pertumbuhan keuntungan.</p>
+    </div>
+</main>
+
+</body>
+</html>

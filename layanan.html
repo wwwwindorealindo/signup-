@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan Pelanggan - Indoreal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --gradient: linear-gradient(to right, #8A2BE2, #9b3dff);
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            margin: 0;
+            padding: 30px 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .cs-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #222;
+            margin: 10px 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .service-box {
+            background: #8A2BE2;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .service-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .service-title i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .btn-connect {
+            display: inline-block;
+            width: 100%;
+            background: #4B0082;
+            color: white;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(138,43,226,0.3);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .btn-connect:hover {
+            transform: scale(1.03);
+        }
+
+        /* Efek kilau bergerak */
+        .btn-connect::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0.3), rgba(255,255,255,0.6), rgba(255,255,255,0.3));
+            transform: skewX(-20deg);
+            animation: shine 2.5s infinite;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://cdn-icons-png.flaticon.com/512/219/219969.png" alt="Customer Service" class="cs-photo">
+
+    <h2>Customer Service</h2>
+    <p>
+        Layanan pelanggan tersedia secara real-time<br>
+        dan siap menjawab pertanyaan Anda.<br>
+        <b>Waktu layanan: 24 Jam</b>
+    </p>
+
+    <div class="service-box">
+        <div class="service-title"><i class="fab fa-telegram"></i>CS Telegram</div>
+        <a href="https://t.me/Indorealcs_12345" target="_blank" class="btn-connect">Lanjutkan</a>
+    </div>
+
+    <div class="service-box">
+        <div class="service-title"><i class="fab fa-whatsapp"></i>CS WhatsApp</div>
+        <a href="#" target="_blank" class="btn-connect">Lanjutkan</a>
+    </div>
+
+
+
+</body>
+</html>

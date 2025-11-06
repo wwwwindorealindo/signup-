@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim dan Undangan - Indoreal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Variabel CSS untuk warna UNGU (Indoreal Style) */
+        :root {
+            --primary-purple: #8A2BE2; /* Ungu Utama */
+            --light-purple: #210e3f;  /* Ungu Lebih Terang */
+            --bg-light: #fff;
+            --text-dark: #333;
+            --text-muted: #666;
+            --text-light: #ffffff;
+            --shadow-subtle: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling Dasar */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-light); 
+            margin: 0; 
+            padding: 0; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            color: var(--text-dark); 
+        }
+        .app-container { 
+            width: 100%; 
+            max-width: 450px; 
+            margin: 0 auto; 
+            background-color: #fff; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+        }
+        .main-content { 
+            padding: 0 20px 80px 20px;
+            flex-grow: 1; 
+        }
+
+        /* ======================================= */
+        /* === HEADER TIM === */
+        /* ======================================= */
+        .team-header {
+            background: linear-gradient(to right, var(--primary-purple), var(--light-purple));
+            color: var(--text-light);
+            padding: 20px 20px 60px 20px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .team-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            margin-bottom: 20px;
+        }
+        
+        /* Link Undangan */
+        .invite-box {
+            background-color: var(--text-light);
+            color: var(--text-dark);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            border: 1px solid var(--light-purple);
+        }
+        .invite-link {
+            background-color: var(--bg-light);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        .btn-copy {
+            width: 100%;
+            padding: 10px;
+            background: var(--light-purple);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-copy:hover {
+            background: var(--primary-purple);
+        }
+
+        /* Total Komisi */
+        .commission-total {
+            background-color: #210e3f;
+            color: var(--text-light);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: -60px; /* Tarik ke atas menimpa header */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+        .commission-total p {
+            font-size: 14px;
+            margin: 0 0 5px 0;
+            font-weight: 500;
+            color: #ccc;
+        }
+        .commission-total h3 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        /* ======================================= */
+        /* === KONTEN TIM === */
+        /* ======================================= */
+        .section-title-team {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--primary-purple);
+            display: inline-block;
+        }
+
+        /* Tingkat Komisi */
+        .commission-levels {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .level-card {
+            background-color: #fff;
+            padding: 15px 10px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid #eee;
+        }
+        .level-card h4 {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 0 0 5px 0;
+            font-weight: 500;
+        }
+        .level-card span {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-purple);
+        }
+
+        /* Anggota Tim Tabs */
+        .team-tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 5px;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 20px;
+        }
+        .team-tab-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            border: none;
+            background-color: transparent;
+            color: var(--text-dark);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .team-tab-btn.active {
+            background-color: var(--primary-purple);
+            color: white;
+            box-shadow: 0 3px 8px rgba(138, 43, 226, 0.4);
+        }
+
+        /* Konten Anggota Tim */
+        .team-content-area {
+            background-color: #fff;
+            min-height: 200px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: var(--shadow-subtle);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .no-member-text {
+            color: var(--text-muted);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* ======================================= */
+        /* === Navigasi Bawah (Indoreal) === */
+        /* ======================================= */
+        .bottom-nav { 
+            display: flex; justify-content: space-around; align-items: center; height: 60px; 
+            background-color: #fff; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+            position: fixed; bottom: 0; width: 100%; max-width: 450px; margin: 0 auto; 
+            border-top: 1px solid #eee; z-index: 10; 
+        }
+        .nav-item { 
+            display: flex; flex-direction: column; align-items: center; text-decoration: none; 
+            color: var(--text-muted); font-size: 10px; font-weight: 500; padding: 5px; transition: color 0.3s; 
+        }
+        .nav-item i { font-size: 20px; margin-bottom: 3px; }
+        .nav-item.active-team { color: var(--primary-purple); } /* Warna aktif ungu */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        
+        <header class="team-header">
+            <h2>Tim dan Undangan</h2>
+            
+            <div class="invite-box">
+                <p style="margin: 0 0 10px 0; font-weight: 600; font-size: 15px; color: var(--primary-purple);">Link Undangan Saya</p>
+                <div class="invite-link">
+                    https://wwwwindorealindo.github.io/signup-/index.html
+                </div>
+                <button class="btn-copy">
+                    <i class="fas fa-copy"></i> Salin
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="commission-total">
+                <p>Total Komisi</p>
+                <h3>Rp 0</h3>
+            </div>
+            
+            <h3 class="section-title-team">Tingkat Komisi</h3>
+            <div class="commission-levels">
+                <div class="level-card">
+                    <h4>Level 1</h4>
+                    <span>25%</span>
+                </div>
+                <div class="level-card">
+                    <h4>Level 2</h4>
+                    <span>3%</span>
+                </div>
+                <div class="level-card">
+                    <h4>Level 3</h4>
+                    <span>2%</span>
+                </div>
+            </div>
+
+            <h3 class="section-title-team">Anggota Tim</h3>
+            
+            <div class="team-tabs">
+                <button class="team-tab-btn active" data-level="1">Level 1</button>
+                <button class="team-tab-btn" data-level="2">Level 2</button>
+                <button class="team-tab-btn" data-level=" 3">Level 3</button>
+            </div>
+
+            <div class="team-content-area" id="team-content">
+                <p class="no-member-text">Tidak ditemukan anggota di level 1</p>
+            </div>
+
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="beranda.html" class="nav-item">
+                <i class="fas fa-home"></i>
+                Beranda
+            </a>
+            <a href="investasiku.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                Invest
+            </a>
+            <a href="tim.html" class="nav-item active-team">
+                <i class="fas fa-users"></i>
+                Tim
+            </a>
+            <a href="profil.html" class="nav-item">
+                <i class="fas fa-user"></i>
+                Profil
+            </a>
+        </nav>
+    </div>
+    
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.team-tab-btn');
+    const teamContent = document.getElementById('team-content');
+    const copyButton = document.querySelector('.btn-copy');
+    const inviteLink = document.querySelector('.invite-link');
+
+    // Fungsi tab anggota tim
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const level = this.getAttribute('data-level');
+            teamContent.innerHTML = `<p class="no-member-text">Tidak ditemukan anggota di Level ${level}</p>`;
+        });
+    });
+
+    // Fungsi tombol salin
+    copyButton.addEventListener('click', function() {
+        const link = inviteLink.textContent.trim();
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                copyButton.innerHTML = '<i class="fas fa-check"></i> Disalin!';
+                copyButton.style.backgroundColor = '#6a1fbf';
+
+                setTimeout(() => {
+                    copyButton.innerHTML = '<i class="fas fa-copy"></i> Salin';
+                    copyButton.style.backgroundColor = '#210e3f';
+                }, 2000);
+            })
+            .catch(err => {
+                alert('Gagal menyalin link: ' + err);
+            });
+    });
+});
+</script>
+</body>
+</html>
